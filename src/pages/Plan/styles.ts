@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const LoadingContainer = styled.div`
   display: flex;
@@ -25,10 +25,20 @@ export const PlanResultContainer = styled.div`
 
 export const HolyTitle = styled.h1`
   display: inline;
-  font-family: "Anton", sans-serif;
+  font-family: 'Anton', sans-serif;
   font-size: 2rem;
   line-height: 1.225em;
   color: #000;
+`;
+
+export const DownloadButton = styled.button`
+  width: 50%;
+  height: 2rem;
+
+  border: 2px solid #000;
+  background-color: #dcc1ff;
+  font-size: 1rem;
+  font-weight: 700;
 `;
 
 export const PlanGrid = styled.div`

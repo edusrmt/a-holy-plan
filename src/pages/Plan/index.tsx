@@ -1,6 +1,13 @@
-import { useContext, useEffect, useState, Fragment } from "react";
-import { BiblePlanContext } from "../../contexts/BiblePlanContext";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  useContext,
+  useEffect,
+  useState,
+  Fragment,
+  useRef,
+  useCallback,
+} from 'react';
+import { BiblePlanContext } from '../../contexts/BiblePlanContext';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   DayLabel,
   HolyTitle,
@@ -9,11 +16,14 @@ import {
   PlanGrid,
   DayReading,
   Credits,
-} from "./styles";
-import generatePlan from "../../utils/generatePlan";
+  DownloadButton,
+} from './styles';
+import generatePlan from '../../utils/generatePlan';
+import { toJpeg } from 'html-to-image';
 
 export const Plan = () => {
   const navigate = useNavigate();
+  const planRef = useRef<HTMLDivElement>(null);
   const { days, books } = useContext(BiblePlanContext);
   const [dots, setDots] = useState(1);
   const [plan, setPlan] = useState<string[]>([]);
@@ -24,7 +34,7 @@ export const Plan = () => {
 
   useEffect(() => {
     if (books.length == 0) {
-      navigate("/");
+      navigate('/');
     }
   }, [navigate, books]);
 
@@ -40,21 +50,40 @@ export const Plan = () => {
     };
   }, [dots]);
 
+  const handleDownloadPlan = useCallback(() => {
+    if (planRef.current === null) return;
+
+    toJpeg(planRef.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.download = 'a-holy-plan.jpg';
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [planRef]);
+
   return (
     <>
       {plan.length == 0 && (
         <LoadingContainer>
-          <p>Montando plano{".".repeat(dots)}</p>
+          <p>Montando plano{'.'.repeat(dots)}</p>
         </LoadingContainer>
       )}
 
       {plan.length > 0 && (
         <PlanResultContainer>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: 'none' }}>
             <HolyTitle>A Holy Plan</HolyTitle>
           </Link>
 
-          <PlanGrid>
+          <DownloadButton onClick={handleDownloadPlan}>
+            Baixar como imagem
+          </DownloadButton>
+
+          <PlanGrid ref={planRef}>
             {plan.map((dayReading, i) => (
               <Fragment key={i}>
                 <DayLabel>Dia {i + 1}</DayLabel>
@@ -65,7 +94,7 @@ export const Plan = () => {
 
           <Credits>
             <p>
-              Desenvolvido por{" "}
+              Desenvolvido por{' '}
               <a
                 href="https://www.linkedin.com/in/edu-sarmento/"
                 target="_blank"
