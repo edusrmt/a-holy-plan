@@ -1,18 +1,19 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const OnboardingContainer = styled.div<{ $step: number }>`
-  position: absolute;
   width: 100vw;
   min-height: 100dvh;
+  max-width: 720px;
+  margin: 0 auto;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: ${(props) => (props.$step === 1 ? "center" : "stretch")};
+  align-items: ${(props) => (props.$step === 1 ? 'center' : 'stretch')};
 
   padding: 1rem 1rem 2rem;
 
-  font-family: "Calistoga", serif;
+  font-family: 'Calistoga', serif;
   font-size: 1.5rem;
 `;
 
@@ -34,6 +35,10 @@ export const OnboardingButton = styled.button`
   font-weight: 700;
 
   margin-top: 1rem;
+
+  &:not(:disabled) {
+    cursor: pointer;
+  }
 `;
 
 // First Step
@@ -46,7 +51,7 @@ export const UpliftText = styled.div`
 
 export const HolyTitle = styled.h1`
   display: inline;
-  font-family: "Anton", sans-serif;
+  font-family: 'Anton', sans-serif;
   font-size: 3rem;
   line-height: 1.225em;
 `;
@@ -56,6 +61,12 @@ export const HolyTitle = styled.h1`
 export const StepTitle = styled.h1`
   font-size: 2rem;
   margin: 1rem 0;
+`;
+
+export const TestamentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
 export const TestamentTitle = styled.h2`
@@ -69,6 +80,7 @@ export const SelectAll = styled.span`
   opacity: 0.75;
   text-decoration: underline;
   margin-bottom: 0.5rem;
+  cursor: pointer;
 `;
 
 export const BookName = styled.p`
@@ -89,7 +101,7 @@ export const DurationContainer = styled.div`
 export const DurationInput = styled.input`
   background-color: transparent;
   border: none;
-  font-family: "Anton", sans-serif;
+  font-family: 'Anton', sans-serif;
   font-size: 6rem;
   text-align: center;
   width: 60%;
@@ -117,6 +129,7 @@ export const EditDurationButton = styled.button`
   font-size: 4rem;
   font-weight: bold;
   border: none;
+  cursor: pointer;
 `;
 
 // Fourth Step

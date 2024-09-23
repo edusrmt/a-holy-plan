@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useState } from 'react';
 import {
   BookName,
   HolyTitle,
@@ -15,12 +15,13 @@ import {
   BooksGrid,
   ConfirmationMessage,
   BookItem,
-} from "./styles";
+  TestamentContainer,
+} from './styles';
 
-import { BibleInfo } from "../../api/bibleInfo";
-import { SelectableItem } from "./components/SelectableItem";
-import { useNavigate } from "react-router-dom";
-import { BiblePlanContext } from "../../contexts/BiblePlanContext";
+import { BibleInfo } from '../../api/bibleInfo';
+import { SelectableItem } from './components/SelectableItem';
+import { useNavigate } from 'react-router-dom';
+import { BiblePlanContext } from '../../contexts/BiblePlanContext';
 
 export function Home() {
   const { setPlanParams } = useContext(BiblePlanContext);
@@ -72,7 +73,7 @@ export function Home() {
   const changeDuration = (event: ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
 
-    if (newValue === "") {
+    if (newValue === '') {
       setDuration(null);
       return;
     }
@@ -84,7 +85,7 @@ export function Home() {
   };
 
   const blurDuration = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value === "") {
+    if (event.target.value === '') {
       setDuration(1);
     }
   };
@@ -101,7 +102,7 @@ export function Home() {
 
   const confirmPlan = () => {
     setPlanParams(duration ?? 1, selectedBooks);
-    navigate("/plan");
+    navigate('/plan');
   };
 
   return (
@@ -125,32 +126,30 @@ export function Home() {
         <>
           <StepTitle>O que você vai ler?</StepTitle>
           <OnboardingContent>
-            <div>
-              {["old", "new"].map((testament) => {
-                return (
-                  <div key={testament}>
-                    <TestamentTitle>
-                      {testament === "old" ? "Antigo" : "Novo"} Testamento
-                    </TestamentTitle>
-                    <SelectAll onClick={() => toggleTestament(testament)}>
-                      Selecionar todos
-                    </SelectAll>
+            {['old', 'new'].map((testament) => {
+              return (
+                <TestamentContainer key={testament}>
+                  <TestamentTitle>
+                    {testament === 'old' ? 'Antigo' : 'Novo'} Testamento
+                  </TestamentTitle>
+                  <SelectAll onClick={() => toggleTestament(testament)}>
+                    Selecionar todos
+                  </SelectAll>
 
-                    {BibleInfo.books
-                      .filter((book) => book.testament === testament)
-                      .map((book) => (
-                        <SelectableItem
-                          toggleFunction={() => toggleBook(book.abbrev)}
-                          isSelected={selectedBooks.includes(book.abbrev)}
-                          key={book.abbrev}
-                        >
-                          <BookName>{book.name}</BookName>
-                        </SelectableItem>
-                      ))}
-                  </div>
-                );
-              })}
-            </div>
+                  {BibleInfo.books
+                    .filter((book) => book.testament === testament)
+                    .map((book) => (
+                      <SelectableItem
+                        toggleFunction={() => toggleBook(book.abbrev)}
+                        isSelected={selectedBooks.includes(book.abbrev)}
+                        key={book.abbrev}
+                      >
+                        <BookName>{book.name}</BookName>
+                      </SelectableItem>
+                    ))}
+                </TestamentContainer>
+              );
+            })}
           </OnboardingContent>
 
           <OnboardingButton
@@ -176,7 +175,7 @@ export function Home() {
                 max="999"
                 onChange={changeDuration}
                 onBlur={blurDuration}
-                value={duration ?? ""}
+                value={duration ?? ''}
               />
               <EditDurationButton onClick={() => addToDuration(1)}>
                 +
@@ -192,7 +191,7 @@ export function Home() {
           <StepTitle>Tudo certo?</StepTitle>
           <OnboardingContent>
             <ConfirmationMessage>
-              Ler {selectedBooks.length} livro{selectedBooks.length > 1 && "s"}{" "}
+              Ler {selectedBooks.length} livro{selectedBooks.length > 1 && 's'}{' '}
               em {duration} dias!
             </ConfirmationMessage>
 

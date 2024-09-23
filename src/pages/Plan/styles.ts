@@ -19,7 +19,9 @@ export const PlanResultContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  max-width: 720px;
 
+  margin: 0 auto;
   padding: 2rem 1rem;
 `;
 
@@ -39,6 +41,7 @@ export const DownloadButton = styled.button`
   background-color: #dcc1ff;
   font-size: 1rem;
   font-weight: 700;
+  cursor: pointer;
 `;
 
 export const PlanGrid = styled.div`
