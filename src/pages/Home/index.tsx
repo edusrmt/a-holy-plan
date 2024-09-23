@@ -22,6 +22,7 @@ import { BibleInfo } from '../../api/bibleInfo';
 import { SelectableItem } from './components/SelectableItem';
 import { useNavigate } from 'react-router-dom';
 import { BiblePlanContext } from '../../contexts/BiblePlanContext';
+import { getChaptersCount } from '../../utils/getChaptersCount';
 
 export function Home() {
   const { setPlanParams } = useContext(BiblePlanContext);
@@ -30,6 +31,7 @@ export function Home() {
   const [onboardingStep, setOnboardingStep] = useState(1);
   const [selectedBooks, setSelectedBooks] = useState<string[]>([]);
   const [duration, setDuration] = useState<number | null>(1);
+  const [maxDuration, setMaxDuration] = useState(0);
 
   const nextStep = () => {
     if (onboardingStep == 2) {
@@ -42,6 +44,7 @@ export function Home() {
       });
 
       setSelectedBooks(sortedBooks);
+      setMaxDuration(getChaptersCount(sortedBooks));
     }
 
     setOnboardingStep(onboardingStep + 1);
@@ -88,12 +91,16 @@ export function Home() {
     if (event.target.value === '') {
       setDuration(1);
     }
+
+    if (Number(event.target.value) > maxDuration) {
+      setDuration(maxDuration);
+    }
   };
 
   const addToDuration = (value: number) => {
     const newDuration = (duration ?? 0) + value;
 
-    if (newDuration <= 0 || newDuration > 999) {
+    if (newDuration <= 0 || newDuration > maxDuration) {
       return;
     }
 
@@ -172,7 +179,7 @@ export function Home() {
               <DurationInput
                 type="number"
                 min="1"
-                max="999"
+                max={maxDuration}
                 onChange={changeDuration}
                 onBlur={blurDuration}
                 value={duration ?? ''}

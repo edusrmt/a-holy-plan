@@ -1,4 +1,4 @@
-import nviChapters from "../data/nvi_chapters.json";
+import { loadNviChapters } from './loadNviChapters';
 
 function linearPartition(numPartitions: number, arr: number[]): number[][] {
   const arrLength = arr.length;
@@ -86,16 +86,6 @@ function binarySearchLeft(array: number[], value: number): number {
   return low;
 }
 
-function loadNviChapters(): Map<string, number[]> {
-  // Convert JSON data to a Map
-  const map = new Map<string, number[]>();
-  for (const [key, value] of Object.entries(nviChapters)) {
-    map.set(key, value);
-  }
-
-  return map;
-}
-
 // Main function to generate reading plan
 export default function generatePlan(days: number, books: string[]): string[] {
   const wordCount = loadNviChapters();
@@ -153,7 +143,7 @@ export default function generatePlan(days: number, books: string[]): string[] {
       }
     }
 
-    holyPlan.push(dailyReading.join("; "));
+    holyPlan.push(dailyReading.join('; '));
 
     chapters += day.length;
   });
