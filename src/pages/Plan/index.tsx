@@ -96,7 +96,7 @@ export const Plan = () => {
             <p>
               Desenvolvido por{' '}
               <a
-                href="https://www.instagram.com/edusrmt"
+                href="https://www.instagram.com/edu.sarmento"
                 target="_blank"
                 rel="noopener noreferrer"
               >
